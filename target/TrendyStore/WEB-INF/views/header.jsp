@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+    <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+    <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -104,17 +106,28 @@ margin-top:10px;
 	 <div class="collapse navbar-collapse" id="myNavbar">
     <ul class="nav navbar-nav">
       <li class="active"><a href="index">Home</a></li>
-      <li><a href="aboutpage">About Us</a></li>
+      <li><a href="about">About Us</a></li>
       <li><a href="contact">Contact</a></li>
         <li><a href="allProducts">All Products</a></li>
           <li><a href="addProducts">Add Products</a></li>
-        
-     
 
     </ul>
+    <c:if test="${pageContext.request.userPrincipal.name != null}">
+		<li><a>Welcome: ${pageContext.request.userPrincipal.name}</a></li>
+		<li><a href="<c:url value="/perform_logout" />">Logout</a></li>
+
+		<security:authorize access="hasRole('ROLE_USER')">
+			<li><a href="<c:url value="/user/cart" />">User Cart</a></li>
+		</security:authorize>
+
+		<security:authorize access="hasRole('ROLE_ADMIN')">
+			<li><a href="<c:url value="/admin/adminHome" />">Administrator</a></li>
+		</security:authorize>
+
+	</c:if>
     <ul class="nav navbar-nav navbar-right">
       <li><a href="register"><span class="glyphicon glyphicon-user"></span> Register</a></li>
-      <li><a href="loginpage"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+      <li><a href="login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
     </ul>
 	</div> <!-- class logo-->
   </div>
